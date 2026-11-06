@@ -76,3 +76,32 @@ npm test
 - Ganti semua akun demo dan kata sandi Wi-Fi.
 
 Data contoh, nama sekolah, dan nama murid dalam `npm run siapkan` adalah fiktif.
+
+## Panduan dan video
+
+| Berkas | Isi |
+|---|---|
+| `docs/panduan/panduan-visual-lentera.pdf` | Panduan visual A4 untuk guru, relawan, koordinator, dan dinas |
+| `docs/video/panduan-penggunaan-lentera.mp4` | Video panduan, direkam dari aplikasi yang berjalan (3,5 menit, tanpa suara) |
+| `docs/video/animasi-alur-iot-lentera.mp4` | Animasi alur modul IoT dan integrasinya (1 menit 44 detik, tanpa suara) |
+| `docs/gambar/` | Ilustrasi kotak IoT dan diagram integrasi (SVG) |
+
+Semua bisa dibuat ulang tanpa ffmpeg; Chrome yang terpasang melakukan encode H.264 lewat WebCodecs:
+
+```bash
+node tools/media/rekam-panduan.mjs   # video panduan + tangkapan layar (±17 menit)
+node tools/media/rekam-animasi.mjs   # video animasi IoT
+node tools/media/buat-pdf.mjs        # PDF dari docs/panduan/panduan-visual.html
+```
+
+Mockup tampilan di bingkai laptop, tablet, dan ponsel untuk esai ada di `docs/mockup/` (PNG 2400 px). Buat ulang dengan `node tools/media/buat-mockup.mjs` setelah `rekam-panduan.mjs` pernah dijalankan.
+
+## Demo di Render
+
+`render.yaml` membuat dua web service (`lentera-pusat` dan `lentera-sekolah`) lewat **New > Blueprint** di dasbor Render, dengan memilih repo ini.
+
+1. Saat diminta, isi `LENTERA_DEMO_PASSWORD`: kata sandi untuk semua akun demo (`guru`, `relawan`, `admin` di sekolah; `koordinator`, `dinas`, `admin` di pusat). `LENTERA_SECRET` dibuat otomatis dan dipakai kedua layanan untuk menurunkan kunci yang sama.
+2. Setelah deploy, cek URL `lentera-pusat`. Bila bukan `https://lentera-pusat.onrender.com`, ubah `PUSAT_URL` di layanan `lentera-sekolah` lalu deploy ulang.
+3. Kode kartu murid demo ada di halaman Guru > Murid.
+
+Di paket free, data demo dibuat ulang setiap layanan menyala ulang, dan layanan tidur setelah 15 menit tanpa kunjungan. Untuk data yang tetap tersimpan, pakai plan starter dan aktifkan blok `disk` di `render.yaml`. Layanan sekolah di cloud hanya untuk demo; di sekolah sungguhan, server berjalan di kotak luring.

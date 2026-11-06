@@ -1,0 +1,64 @@
+# Blueprint Render untuk demo LENTERA.
+# Membuat dua web service:
+#   lentera-pusat    dasbor koordinator/dinas dan penerima sinkron
+#   lentera-sekolah  server sekolah (murid, guru, relawan) dengan simulator modul IoT
+#
+# Saat membuat blueprint, Render meminta LENTERA_DEMO_PASSWORD: kata sandi untuk semua akun demo
+# (guru, relawan, admin, koordinator, dinas). LENTERA_SECRET dibuat otomatis oleh Render.
+#
+# Paket free: data demo dibuat ulang setiap kali layanan menyala ulang atau di-deploy,
+# dan layanan tidur setelah 15 menit tanpa kunjungan (kunjungan pertama butuh ±1 menit).
+# Untuk data yang tetap tersimpan, ganti plan ke starter dan aktifkan blok disk di bawah.
+
+envVarGroups:
+  - name: lentera-bersama
+    envVars:
+      - key: LENTERA_SECRET
+        generateValue: true
+      - key: LENTERA_DEMO_PASSWORD
+        sync: false
+
+services:
+  - type: web
+    name: lentera-pusat
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm install --omit=dev
+    startCommand: node scripts/render-start.js pusat
+    healthCheckPath: /sync/public-key
+    autoDeploy: true
+    envVars:
+      - fromGroup: lentera-bersama
+      - key: NODE_VERSION
+        value: "24"
+    # disk:
+    #   name: lentera-pusat-data
+    #   mountPath: /var/data
+    #   sizeGB: 1
+
+  - type: web
+    name: lentera-sekolah
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm install --omit=dev
+    startCommand: node scripts/render-start.js sekolah
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - fromGroup: lentera-bersama
+      - key: NODE_VERSION
+        value: "24"
+      # Alamat publik layanan pusat. Ganti bila Render memberi subdomain lain
+      # (lihat URL layanan lentera-pusat di dasbor Render).
+      - key: PUSAT_URL
+        value: https://lentera-pusat.onrender.com
+      - key: DEMO_IOT
+        value: "1"
+      - key: SINKRON_MENIT
+        value: "10"
+    # disk:
+    #   name: lentera-sekolah-data
+    #   mountPath: /var/data
+    #   sizeGB: 1

@@ -9,7 +9,7 @@ import { generateKeypair, hashPassword } from '../shared/packet.js';
 import { openPusatDb } from '../pusat/db.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const DATA = path.join(root, 'data');
+const DATA = path.resolve(process.env.LENTERA_DATA_ROOT || path.join(root, 'data'));
 
 export const SCHOOLS = [
   { device_id: 'LTR-0001', school_id: 'SCH-001', name: 'SD Negeri Bukit Harapan', region: 'Kab. Contoh Timur', region_code: '53.99.01', seed: 7, live: true },
@@ -25,7 +25,18 @@ function word(n = 4) {
   for (let i = 0; i < n; i++) s += a[crypto.randomInt(a.length)] + v[crypto.randomInt(v.length)];
   return s;
 }
-const demoPassword = () => `${word(2)}-${word(2)}-${crypto.randomInt(10, 99)}`;
+// Untuk penerapan di cloud (mis. Render): bila LENTERA_SECRET diisi, semua kunci diturunkan
+// dari rahasia itu sehingga layanan pusat dan sekolah yang disiapkan terpisah tetap cocok.
+const SECRET = process.env.LENTERA_SECRET || null;
+const derive = (label, len = 32) =>
+  SECRET ? Buffer.from(crypto.hkdfSync('sha256', SECRET, 'lentera-v1', label, len)) : crypto.randomBytes(len);
+function keypairFor(label) {
+  if (!SECRET) return generateKeypair();
+  const der = Buffer.concat([Buffer.from('302e020100300506032b657004220420', 'hex'), derive(`ed25519:${label}`)]);
+  const priv = crypto.createPrivateKey({ key: der, format: 'der', type: 'pkcs8' });
+  return { privateKeyPem: priv.export({ type: 'pkcs8', format: 'pem' }), publicKeyPem: crypto.createPublicKey(priv).export({ type: 'spki', format: 'pem' }) };
+}
+const demoPassword = () => process.env.LENTERA_DEMO_PASSWORD || `${word(2)}-${word(2)}-${crypto.randomInt(10, 99)}`;
 
 export function provision({ ulang = false } = {}) {
   if (fs.existsSync(path.join(DATA, 'pusat', 'config.json')) && !ulang) {
@@ -35,7 +46,7 @@ export function provision({ ulang = false } = {}) {
   if (ulang && fs.existsSync(DATA)) fs.rmSync(DATA, { recursive: true, force: true });
   fs.mkdirSync(path.join(DATA, 'pusat'), { recursive: true });
 
-  const pusatKeys = generateKeypair();
+  const pusatKeys = keypairFor('pusat');
   fs.writeFileSync(path.join(DATA, 'pusat', 'config.json'), JSON.stringify({ private_key_pem: pusatKeys.privateKeyPem, public_key_pem: pusatKeys.publicKeyPem }, null, 2));
 
   const pdb = openPusatDb(path.join(DATA, 'pusat'));
@@ -43,8 +54,8 @@ export function provision({ ulang = false } = {}) {
   const accounts = { sekolah: {}, pusat: {} };
 
   for (const s of SCHOOLS) {
-    const keys = generateKeypair();
-    const syncKey = crypto.randomBytes(32).toString('hex');
+    const keys = keypairFor(s.device_id);
+    const syncKey = derive(`sync:${s.device_id}`).toString('hex');
     const dir = s.live ? path.join(DATA, 'sekolah') : path.join(DATA, 'sekolah-lain', s.device_id);
     fs.mkdirSync(dir, { recursive: true });
     const cfg = {
@@ -59,7 +70,7 @@ export function provision({ ulang = false } = {}) {
       },
       wifi: { ssid: `LENTERA-${s.school_id.slice(-3)}` },
       kolibri_url: process.env.KOLIBRI_URL || 'http://lentera.local:8000',
-      iot_key: crypto.randomBytes(12).toString('hex'),
+      iot_key: derive(`iot:${s.device_id}`, 12).toString('hex'),
       keys: { private_key_pem: keys.privateKeyPem, sync_key_hex: syncKey },
       pusat: { url: process.env.PUSAT_URL || 'http://localhost:9090', public_key_pem: pusatKeys.publicKeyPem },
     };

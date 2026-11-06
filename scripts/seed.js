@@ -14,7 +14,7 @@ import { generateHistory } from './history.js';
 import { SCHOOLS } from './provision.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const DATA = path.join(root, 'data');
+const DATA = path.resolve(process.env.LENTERA_DATA_ROOT || path.join(root, 'data'));
 
 const PROFIL = {
   'LTR-0001': { nStudents: 30, pendingConsent: 2, sessionRate: 0.9, volunteerRate: 0.88, outage: [12], openReport: 'Lampu indikator modul kadang berkedip merah walau baterai penuh.' },

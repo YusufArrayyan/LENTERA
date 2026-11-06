@@ -1,0 +1,12 @@
+{
+  "name": "LENTERA Relawan",
+  "short_name": "LENTERA",
+  "description": "Pandu sesi belajar dan bawa data sekolah ke pusat.",
+  "start_url": "/relawan",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1f5f5a",
+  "lang": "id",
+  "icons": [{ "src": "/ui/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

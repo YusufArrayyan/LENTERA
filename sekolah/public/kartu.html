@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cetak kartu · LENTERA</title>
+  <link rel="icon" href="/ui/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/ui/lentera.css">
+  <style>
+    body { background: var(--surface); }
+    .bar { display: flex; gap: 12px; align-items: center; padding: 16px 24px; background: var(--bg); border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+    .sheet { display: grid; grid-template-columns: repeat(2, 85.6mm); gap: 6mm; justify-content: center; padding: 10mm; }
+    .card {
+      width: 85.6mm; height: 54mm; background: white; border-radius: 3.5mm; border: 0.3mm solid #bbb;
+      display: grid; grid-template-columns: 30mm 1fr; gap: 3mm; padding: 4mm; break-inside: avoid; overflow: hidden; position: relative;
+    }
+    .card::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 2.2mm; background: var(--brand); }
+    .card .qr svg { width: 30mm; height: 30mm; display: block; margin-top: 3mm; }
+    .card .meta { display: flex; flex-direction: column; gap: 1mm; padding-top: 3mm; min-width: 0; }
+    .card .school { font-size: 7pt; color: #444; font-weight: 600; }
+    .card .name { font-size: 12pt; font-weight: 800; line-height: 1.15; color: #111; overflow-wrap: anywhere; }
+    .card .kls { font-size: 8pt; color: #444; }
+    .card .code { margin-top: auto; font-family: var(--mono); font-size: 17pt; font-weight: 800; letter-spacing: 0.08em; color: #111; }
+    .card .hint { font-size: 6.5pt; color: #555; }
+    .card.device { grid-template-columns: 34mm 1fr; }
+    .card.device .qr svg { width: 34mm; height: 34mm; margin-top: 2mm; }
+    @media print {
+      @page { size: A4; margin: 8mm; }
+      body { background: white; }
+      .bar { display: none; }
+      .sheet { padding: 0; }
+    }
+  </style>
+  <script type="module" src="/kartu.js"></script>
+</head>
+<body>
+  <div class="bar">
+    <strong id="title">Kartu murid</strong>
+    <span class="muted small" id="count"></span>
+    <span class="grow"></span>
+    <button class="btn btn-primary" id="print">Cetak</button>
+  </div>
+  <div class="sheet" id="sheet"></div>
+</body>
+</html>

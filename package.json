@@ -1,0 +1,18 @@
+{
+  "name": "lentera",
+  "version": "1.0.0-pilot",
+  "private": true,
+  "description": "LENTERA: server belajar numerasi luring dengan pemantauan IoT, sinkronisasi simpan-lalu-teruskan, dan dasbor pusat.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "siapkan": "node scripts/provision.js && node scripts/seed.js",
+    "sekolah": "node sekolah/server.js",
+    "pusat": "node pusat/server.js",
+    "iot": "node iot/simulator.js",
+    "test": "node --no-warnings --test \"test/*.test.js\""
+  },
+  "license": "MIT"
+}

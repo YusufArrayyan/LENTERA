@@ -1,0 +1,66 @@
+.page-title { margin-bottom: var(--s-5); }
+.page-title h1 { font-size: var(--t-2xl); }
+.page-title p { color: var(--ink-2); margin-top: 4px; }
+.block { margin-top: var(--s-6); }
+.block > h2 { margin-bottom: var(--s-3); }
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: var(--s-4); }
+
+/* Daftar kelompok untuk memulai sesi */
+.list > li.group-row { display: grid; grid-template-columns: auto 1fr auto; gap: var(--s-3); align-items: center; }
+.lvl {
+  width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center;
+  font-weight: 850; font-size: var(--t-lg); background: var(--brand-pale); color: var(--brand-ink); font-variant-numeric: tabular-nums;
+}
+.lvl-1 { background: oklch(0.95 0.035 180); }
+.lvl-2 { background: oklch(0.92 0.05 180); }
+.lvl-3 { background: oklch(0.88 0.06 180); }
+.lvl-4 { background: oklch(0.83 0.07 180); }
+.lvl-5 { background: oklch(0.76 0.08 180); color: oklch(0.25 0.05 182); }
+
+/* Sesi berjalan */
+.session-head { display: flex; flex-wrap: wrap; gap: var(--s-4); align-items: center; justify-content: space-between; padding: var(--s-5); border-radius: var(--r-lg); background: var(--brand-strong); color: oklch(0.97 0.01 180); }
+.session-head h1 { color: oklch(1 0 0); }
+.session-head .muted { color: oklch(0.88 0.03 180); }
+.timer { font-size: 2.5rem; font-weight: 850; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; color: var(--flame); line-height: 1; }
+.list > li.att { display: grid; grid-template-columns: 1fr auto; gap: var(--s-3); align-items: center; }
+.att-name { font-weight: 650; }
+.att-meta { font-size: var(--t-sm); color: var(--ink-2); }
+.toggle { display: inline-flex; border: 1.5px solid var(--line-strong); border-radius: var(--r-pill); overflow: hidden; }
+.toggle button { min-height: 40px; min-width: 76px; padding: 0 12px; border: 0; background: var(--bg); font: inherit; font-weight: 700; font-size: var(--t-sm); color: var(--ink-2); cursor: pointer; transition: background-color 150ms var(--ease), color 150ms var(--ease); }
+.toggle button + button { border-left: 1.5px solid var(--line-strong); }
+.toggle button[aria-pressed='true'].yes { background: var(--ok); color: oklch(1 0 0); }
+.toggle button[aria-pressed='true'].no { background: var(--surface-2); color: var(--ink); }
+
+.guide ol { margin: var(--s-3) 0 0; padding-left: 1.3em; display: grid; gap: 8px; }
+.guide .bahan { display: flex; gap: 8px; flex-wrap: wrap; margin-top: var(--s-2); }
+
+/* Langkah sinkron relawan */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-3); counter-reset: s; }
+.step { display: grid; grid-template-columns: 40px 1fr; gap: var(--s-4); padding: var(--s-4); border: 1px solid var(--line); border-radius: var(--r-lg); }
+.step::before {
+  counter-increment: s; content: counter(s);
+  width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-weight: 850;
+  background: var(--surface-2); color: var(--ink-2);
+}
+.step.done::before { content: '✓'; background: var(--ok); color: oklch(1 0 0); }
+.step.active { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-pale); }
+.step.active::before { background: var(--brand); color: oklch(1 0 0); }
+.step h3 { margin-bottom: 4px; }
+.step p { color: var(--ink-2); font-size: var(--t-sm); }
+.step .row { margin-top: var(--s-3); }
+
+.inline-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--s-3); align-items: end; padding: var(--s-4); background: var(--surface); border-radius: var(--r-md); margin-top: var(--s-2); width: 100%; }
+.confirm { padding: var(--s-4); background: var(--bad-pale); border-radius: var(--r-md); width: 100%; display: grid; gap: var(--s-3); }
+.confirm p { color: var(--ink); }
+
+.code { font-family: var(--mono); font-weight: 700; letter-spacing: 0.06em; }
+.chart-box { padding: var(--s-4); border: 1px solid var(--line); border-radius: var(--r-lg); }
+.chart-box h3 { font-size: var(--t-md); margin-bottom: var(--s-2); }
+
+@media (max-width: 640px) {
+  .main { padding: var(--s-4) var(--s-4) var(--s-7); }
+  .topbar #who { display: none; }
+  .timer { font-size: 2rem; }
+  .hide-sm { display: none; }
+}
+.btn.muted { --btn-fg: var(--ink-2); font-weight: 600; }

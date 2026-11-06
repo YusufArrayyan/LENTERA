@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1f5f5a">
+  <title>Masuk · LENTERA</title>
+  <link rel="icon" href="/ui/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/ui/lentera.css">
+  <link rel="stylesheet" href="/masuk.css">
+  <script type="module" src="/masuk.js"></script>
+</head>
+<body>
+  <div class="gate">
+    <aside class="gate-side">
+      <div class="brand" id="brand"></div>
+      <div>
+        <h1 id="school">Server belajar sekolah</h1>
+        <p class="lede">Latihan numerasi untuk kelas I sampai VI. Berjalan di Wi-Fi sekolah, tanpa internet.</p>
+      </div>
+      <div class="gate-facts" id="facts"></div>
+    </aside>
+    <main class="gate-main">
+      <div class="gate-form">
+        <div class="seg" role="tablist" aria-label="Pilih cara masuk">
+          <button type="button" role="tab" id="tab-murid" aria-selected="true" aria-controls="form-murid">Murid</button>
+          <button type="button" role="tab" id="tab-staf" aria-selected="false" aria-controls="form-staf">Guru atau relawan</button>
+        </div>
+
+        <form id="form-murid" class="stack" novalidate>
+          <div>
+            <h2>Masuk dengan kartu</h2>
+            <p class="muted" style="margin-top:6px">Pindai kode QR di kartumu, atau ketik enam huruf dan angka di bawahnya.</p>
+          </div>
+          <button type="button" class="btn btn-flame btn-lg" id="scan" style="width:100%" hidden></button>
+          <p class="or" id="or" hidden>atau ketik kode</p>
+          <div class="field">
+            <label for="kode">Kode kartu</label>
+            <input class="input code-input" id="kode" name="kode" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="7" placeholder="KJ7-M4P" aria-describedby="kode-err">
+            <p class="field-error" id="kode-err" role="alert"></p>
+          </div>
+          <button class="btn btn-primary btn-lg" style="width:100%">Mulai belajar</button>
+        </form>
+
+        <form id="form-staf" class="stack" novalidate hidden>
+          <div>
+            <h2>Masuk sebagai guru atau relawan</h2>
+            <p class="muted" style="margin-top:6px">Akun dibuat oleh admin sekolah saat pelatihan.</p>
+          </div>
+          <div class="field">
+            <label for="username">Nama pengguna</label>
+            <input class="input" id="username" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+          </div>
+          <div class="field">
+            <label for="password">Kata sandi</label>
+            <input class="input" id="password" name="password" type="password" autocomplete="current-password" required aria-describedby="staf-err">
+            <p class="field-error" id="staf-err" role="alert"></p>
+          </div>
+          <button class="btn btn-primary btn-lg" style="width:100%">Masuk</button>
+          <p class="help">Lupa kata sandi? Minta admin sekolah mengatur ulang dari server.</p>
+        </form>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+body { background: var(--bg); min-height: 100dvh; display: flex; flex-direction: column; }
+.kid-bar { display: flex; align-items: center; gap: var(--s-3); padding: 10px var(--s-4); border-bottom: 1px solid var(--line); }
+.kid-bar .brand-mark { width: 34px; height: 34px; }
+.kid-chip { padding: 6px 14px; border-radius: var(--r-pill); background: var(--brand-pale); color: var(--brand-ink); font-weight: 750; font-size: var(--t-sm); }
+.kid-stars { display: inline-flex; align-items: center; gap: 6px; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--flame-ink); }
+.kid-stars .icon { color: var(--flame-strong); fill: var(--flame); }
+.kid-net { background: var(--warn-pale); color: var(--warn-ink); padding: 10px var(--s-4); font-weight: 650; text-align: center; }
+
+.kid-main { flex: 1; width: min(100%, 760px); margin: 0 auto; padding: var(--s-6) var(--s-4) var(--s-7); display: flex; flex-direction: column; justify-content: center; }
+.q-meta { text-align: center; color: var(--ink-2); font-weight: 700; font-size: var(--t-sm); letter-spacing: 0.02em; }
+.q-prompt { text-align: center; font-size: clamp(1.6rem, 5vw, 2.6rem); font-weight: 850; letter-spacing: -0.02em; line-height: 1.2; margin: var(--s-3) auto var(--s-4); max-width: 22ch; font-variant-numeric: tabular-nums; }
+.q-prompt.is-eq { font-size: clamp(2.6rem, 9vw, 4.5rem); letter-spacing: 0; }
+.q-visual { display: flex; justify-content: center; margin-bottom: var(--s-5); }
+.q-visual svg { width: min(100%, 420px); height: auto; }
+
+.opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-3); margin-top: var(--s-4); }
+.opt {
+  min-height: 104px; border-radius: var(--r-xl); border: 3px solid var(--line-strong); background: var(--bg);
+  font: inherit; font-size: clamp(2rem, 7vw, 2.75rem); font-weight: 850; color: var(--ink); font-variant-numeric: tabular-nums;
+  cursor: pointer; box-shadow: 0 5px 0 var(--line-strong);
+  transition: transform 140ms var(--ease), box-shadow 140ms var(--ease), background-color 160ms var(--ease), border-color 160ms var(--ease);
+}
+.opt:hover { border-color: var(--brand); box-shadow: 0 5px 0 var(--brand); }
+.opt:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--line-strong); }
+.opt:disabled { cursor: default; }
+.opt.is-picked { border-color: var(--brand); background: var(--brand-pale); box-shadow: 0 5px 0 var(--brand); }
+.opt.is-right { border-color: var(--ok); background: var(--ok-pale); color: var(--ok-ink); box-shadow: 0 5px 0 var(--ok); }
+.opt.is-wrong { border-color: var(--bad); background: var(--bad-pale); color: var(--bad-ink); box-shadow: 0 5px 0 var(--bad); }
+.opts.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+.fb { margin-top: var(--s-5); border-radius: var(--r-xl); padding: var(--s-4) var(--s-5); display: flex; align-items: center; gap: var(--s-4); animation: rise 260ms var(--ease); }
+.fb-ok { background: var(--ok-pale); color: var(--ok-ink); }
+.fb-bad { background: var(--bad-pale); color: var(--bad-ink); }
+.fb-neutral { background: var(--surface); color: var(--ink-2); }
+.fb strong { font-size: var(--t-xl); font-weight: 850; display: block; color: inherit; }
+.fb p { color: var(--ink); }
+.fb .btn { margin-left: auto; }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+
+.hello { text-align: center; margin: auto 0; display: grid; gap: var(--s-4); justify-items: center; }
+.hello h1 { font-size: clamp(1.8rem, 6vw, 2.6rem); font-weight: 850; max-width: 18ch; }
+.hello p { font-size: var(--t-lg); color: var(--ink-2); max-width: 34ch; }
+.hello .lamp { width: 112px; height: 112px; }
+.hello .lamp .glow { animation: glow 2.4s var(--ease) infinite alternate; transform-origin: center; }
+@keyframes glow { from { opacity: 0.55; } to { opacity: 1; } }
+.level-ladder { display: flex; gap: 6px; justify-content: center; }
+.level-ladder span { width: 38px; height: 10px; border-radius: var(--r-pill); background: var(--surface-2); }
+.level-ladder span.on { background: var(--flame); }
+.level-ladder span.here { background: var(--brand); }
+
+.subdots { display: inline-flex; gap: 4px; margin-left: 6px; vertical-align: middle; }
+.subdots i { width: 8px; height: 8px; border-radius: 50%; background: var(--line-strong); display: inline-block; }
+.subdots i.on { background: var(--brand); }
+
+@media (max-width: 420px) {
+  .opt { min-height: 88px; }
+}
+#fb { min-height: 112px; }

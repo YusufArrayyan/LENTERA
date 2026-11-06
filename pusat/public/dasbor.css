@@ -1,0 +1,51 @@
+.main.wide { max-width: 1280px; }
+.login { max-width: 420px; margin: 8vh auto; }
+.login h1 { margin-bottom: 6px; }
+
+.head { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--s-4); flex-wrap: wrap; margin-bottom: var(--s-5); }
+.head p { color: var(--ink-2); margin-top: 4px; }
+
+/* Gerbang keputusan pilot */
+.gates { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; }
+.gate-cell { padding: var(--s-4) var(--s-5); border-right: 1px solid var(--line); display: grid; gap: 6px; }
+.gate-cell:last-child { border-right: 0; }
+.gate-cell .k { font-size: var(--t-sm); color: var(--ink-2); font-weight: 600; }
+.gate-cell .v { font-size: var(--t-2xl); font-weight: 850; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.gate-cell .v small { font-size: var(--t-md); color: var(--ink-2); font-weight: 650; letter-spacing: 0; }
+.pips { display: flex; gap: 4px; }
+.pips i { height: 6px; flex: 1; border-radius: var(--r-pill); background: var(--surface-2); }
+.pips i.pass { background: var(--ok); }
+.pips i.fail { background: var(--bad); }
+@media (max-width: 720px) { .gate-cell { border-right: 0; border-bottom: 1px solid var(--line); } }
+
+/* Tabel sekolah */
+.cell-flag { display: inline-flex; align-items: center; gap: 6px; font-variant-numeric: tabular-nums; font-weight: 650; }
+.cell-flag.fail { color: var(--bad-ink); font-weight: 800; }
+.cell-flag.fail::before { content: ''; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 7px solid var(--bad); }
+.lv { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.lv b { font-weight: 800; }
+.lv .up { color: var(--ok-ink); font-weight: 700; font-size: var(--t-xs); margin-left: 4px; }
+.lv .down { color: var(--bad-ink); font-weight: 700; font-size: var(--t-xs); margin-left: 4px; }
+.school-name { font-weight: 750; color: var(--ink); white-space: nowrap; }
+
+.layout-2 { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(300px, 1fr); gap: var(--s-5); align-items: start; }
+@media (max-width: 1000px) { .layout-2 { grid-template-columns: minmax(0, 1fr); } }
+
+.detail { border: 1px solid var(--line); border-radius: var(--r-lg); padding: var(--s-5); scroll-margin-top: 80px; }
+.detail-head { display: flex; justify-content: space-between; gap: var(--s-3); flex-wrap: wrap; align-items: flex-start; margin-bottom: var(--s-4); }
+.kv { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--s-4); margin: var(--s-4) 0; }
+.kv div { display: grid; gap: 2px; }
+.kv dt { font-size: var(--t-xs); color: var(--ink-2); font-weight: 700; }
+.kv dd { margin: 0; font-weight: 750; font-variant-numeric: tabular-nums; }
+
+.todo li { align-items: flex-start; }
+.todo .icon { margin-top: 3px; }
+.sub-h { font-size: var(--t-md); font-weight: 750; margin: var(--s-5) 0 var(--s-3); }
+
+@media print {
+  .no-print, .layout-2, form { display: none !important; }
+  .gates { break-inside: avoid; }
+  h1 { font-size: 18pt; }
+  th { position: static; }
+}
+.inline-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3); }

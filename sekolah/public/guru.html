@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>Guru · LENTERA</title>
+  <link rel="icon" href="/ui/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/ui/lentera.css">
+  <link rel="stylesheet" href="/staf.css">
+  <script type="module" src="/staf.js"></script>
+</head>
+<body data-app="guru">
+  <header class="topbar">
+    <a class="brand" href="#hari-ini" id="brand"></a>
+    <span class="grow"></span>
+    <span id="outbox" class="badge badge-warn" hidden></span>
+    <span id="who" class="small muted"></span>
+    <button class="btn btn-quiet btn-sm" id="logout">Keluar</button>
+  </header>
+  <nav class="tabs" role="tablist" id="tabs" aria-label="Bagian"></nav>
+  <main class="main" id="view" tabindex="-1">
+    <div class="skeleton" style="height:96px"></div>
+  </main>
+</body>
+</html>
